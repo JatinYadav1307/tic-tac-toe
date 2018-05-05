@@ -1,35 +1,10 @@
 import  React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import crossImage from './../../images/cross.svg'
 import circleImage from './../../images/circle.svg'
 
-const Box = styled.div`
-  width: 100px;
-  height: 100px;
-  border: 1px solid #CCB6A2;
-  margin: 5px;
-  position: relative;
+import { Box, Center, ResponsiveImage } from './UI'
 
-  @media (max-width: 425px) {
-    width: 70px;
-    height: 70px;
-  }
-`
-
-const Center = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const ResponsiveImage = styled.img`
-  height: 40px;
-  @media (max-width: 425px) {
-    height: 30px;
-  }
-`
 const Cross = () => (<ResponsiveImage src={crossImage} alt={'Cross'} />)
 const Circle = () => (<ResponsiveImage src={circleImage} alt={'Circle'} />)
 

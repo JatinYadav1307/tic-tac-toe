@@ -4,7 +4,7 @@ import { select } from '@rematch/select'
 import { Flex } from 'grid-styled'
 import BoxContainer from './../BoxContainer'
 
-import { TurnBanner, WinnerBanner, CustomButton } from './UI'
+import { TurnBanner, WinnerBanner, CustomButton, MainHeading } from './UI'
 
 const rows = [
   { key: 'TOP_ROW', values: ['topLeft', 'centerTop', 'topRight'] },
@@ -57,6 +57,7 @@ class Home extends Component {
     return (
       <React.Fragment>
       <Flex flexDirection={'column'} alignItems={'center'}>
+        <MainHeading>TIC-TAC-TOE</MainHeading>
         <TurnBanner>It's <span>{this.props.currentPlayer}'s</span> turn</TurnBanner>
         {rows.map((row) => (
           <Flex key={row.key}>

@@ -42,3 +42,14 @@ export const CustomButton = styled.button`
   color: #FFFFFF;
   outline: none;
 `
+
+export const MainHeading = styled.div`
+  color: #9E705E;
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 40px;
+
+  @media (max-width: 425px) {
+    font-size: 40px;
+  }
+`
