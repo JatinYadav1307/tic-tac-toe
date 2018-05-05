@@ -8,8 +8,13 @@ const Box = styled.div`
   width: 100px;
   height: 100px;
   border: 1px solid #CCB6A2;
-  margin: 10px;
+  margin: 5px;
   position: relative;
+
+  @media (max-width: 425px) {
+    width: 70px;
+    height: 70px;
+  }
 `
 
 const Center = styled.div`
@@ -18,22 +23,20 @@ const Center = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
 `
-const Cross = () => (<img src={crossImage} alt={'Cross'} height={'40px'} />)
-const Circle = () => (<img src={circleImage} alt={'Circle'} height={'40px'} />)
+
+const ResponsiveImage = styled.img`
+  height: 40px;
+  @media (max-width: 425px) {
+    height: 30px;
+  }
+`
+const Cross = () => (<ResponsiveImage src={crossImage} alt={'Cross'} />)
+const Circle = () => (<ResponsiveImage src={circleImage} alt={'Circle'} />)
 
 class BoxContainer extends Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      isSet: false,
-    }
-  }
-
   handleClick() {
-    if (!this.state.isSet) {
+    if (!this.props.isSet()) {
       this.props.fill()(this.props.name)
-      this.setState({ isSet: true })
       this.props.changePlayer()
     }
   }

@@ -4,6 +4,8 @@ import { select } from '@rematch/select'
 import { Flex } from 'grid-styled'
 import BoxContainer from './../BoxContainer'
 
+import { TurnBanner, WinnerBanner, CustomButton } from './UI'
+
 const rows = [
   { key: 'TOP_ROW', values: ['topLeft', 'centerTop', 'topRight'] },
   { key: 'MIDDLE_ROW', values: ['centerLeft', 'center', 'centerRight'] },
@@ -47,6 +49,11 @@ class Home extends Component {
     return result.find((value) => value === true)
   }
 
+  resetGame() {
+    this.props.boardReset()
+    this.props.gameReset()
+  }
+
   componentDidUpdate = (prevProps, prevState) => {
     if (!this.props.isGameOver && this.checkWin()) {
       this.props.setGameOver()
@@ -57,14 +64,15 @@ class Home extends Component {
   render() {
     return (
       <React.Fragment>
-      <p>{this.props.currentPlayer}'s Turn</p>
-      <Flex flexDirection={'column'}>
+      <Flex flexDirection={'column'} alignItems={'center'}>
+        <TurnBanner>It's <span>{this.props.currentPlayer}'s</span> turn</TurnBanner>
         {rows.map((row) => (
-          <Flex p={2} key={row.key}>
+          <Flex key={row.key}>
           {row.values.map((boxName) => (
             <BoxContainer
               key={boxName}
               name={boxName}
+              isSet={() => this.props.getStatusOf(boxName)}
               changePlayer={() => this.props.changePlayer()}
               fill={() => this.getFillFunction()}
               value={(name) => this.props.getValueOf(name)}
@@ -72,15 +80,21 @@ class Home extends Component {
           ))}
           </Flex>
         ))}
+        {this.props.isGameOver && (
+          <React.Fragment>
+            <WinnerBanner><span>{this.props.winner}</span> wins!</WinnerBanner>
+            <CustomButton onClick={() => this.resetGame()}>Reset</CustomButton>
+          </React.Fragment>
+        )}
       </Flex>
-      {this.props.isGameOver && (<p>Winner is {this.props.winner}</p>)}
       </React.Fragment>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  getValueOf: (place) => select.board.getCurrentValueAt(state, place),
+  getValueOf: (place) => select.board.getCurrentValueOf(state, place),
+  getStatusOf: (place) => select.board.getCurrentStatusOf(state, place),
   currentPlayer: select.game.getCurrentPlayer(state),
   isGameOver: select.game.isGameOver(state),
   winner: select.game.getWinner(state),
@@ -91,7 +105,9 @@ const mapDispatchToProps = (dispatch) => ({
   setCircle: (place) => dispatch.board.setCircle(place),
   changePlayer: () => dispatch.game.changePlayer(),
   setGameOver: () => dispatch.game.setGameOver(),
-  setWinner: (name) => dispatch.game.setWinner(name)
+  setWinner: (name) => dispatch.game.setWinner(name),
+  gameReset: () => dispatch.game.gameReset(),
+  boardReset: () => dispatch.board.resetBoard(),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

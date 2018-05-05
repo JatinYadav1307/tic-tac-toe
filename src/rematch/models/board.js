@@ -1,24 +1,28 @@
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 
 export default {
   state: fromJS({
-    topLeft: null,
-    topRight: null,
-    bottomLeft: null,
-    bottomRight: null,
-    centerTop: null,
-    centerBottom: null,
-    centerLeft: null,
-    centerRight: null,
-    center: null,
+    topLeft: {value: null, isSet: false},
+    topRight: {value: null, isSet: false},
+    bottomLeft: {value: null, isSet: false},
+    bottomRight: {value: null, isSet: false},
+    centerTop: {value: null, isSet: false},
+    centerBottom: {value: null, isSet: false},
+    centerLeft: {value: null, isSet: false},
+    centerRight: {value: null, isSet: false},
+    center: {value: null, isSet: false},
   }),
 
   reducers: {
-    setCross: (state, place) => state.set(place, 'X'),
-    setCircle: (state, place) => state.set(place, 'O'),
+    setCross: (state, place) => state.setIn([place, 'value'], 'X').setIn([place, 'isSet'], true),
+    setCircle: (state, place) => state.setIn([place, 'value'], 'O').setIn([place, 'isSet'], true),
+    resetBoard: (state) =>  {
+      return state.mapEntries(([K, V]) => [K, Map({value: null, isSet: false})])
+    }
   },
 
   selectors: {
-    getCurrentValueAt: (state, place) => state.get(place),
+    getCurrentValueOf: (state, place) => state.getIn([place, 'value']),
+    getCurrentStatusOf: (state, place) => state.getIn([place, 'isSet']),
   },
 }
