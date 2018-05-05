@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { select } from '@rematch/select'
-import { Flex, Box } from 'grid-styled'
+import { Flex } from 'grid-styled'
 import BoxContainer from './../BoxContainer'
 
 const rows = [
