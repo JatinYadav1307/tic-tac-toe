@@ -53,3 +53,14 @@ export const MainHeading = styled.div`
 		font-size: 40px;
 	}
 `
+
+export const Information = styled.div`
+	color: #9e705e;
+	font-size: 15px;
+	margin: 15px 0 0 0;
+	a {
+		text-decoration: none;
+		color: #ccb6a2;
+		font-weight: 600;
+	}
+`

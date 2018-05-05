@@ -4,7 +4,7 @@ import { select } from '@rematch/select'
 import { Flex } from 'grid-styled'
 import BoxContainer from './../BoxContainer'
 
-import { TurnBanner, WinnerBanner, CustomButton, MainHeading } from './UI'
+import { TurnBanner, WinnerBanner, CustomButton, MainHeading, Information } from './UI'
 
 const rows = [
 	{ key: 'TOP_ROW', values: ['topLeft', 'centerTop', 'topRight'] },
@@ -80,6 +80,12 @@ class Home extends Component {
 							))}
 						</Flex>
 					))}
+					<Information>
+						Check out the code over at{' '}
+						<a href="https://github.com/JatinYadav1307/tic-tac-toe" target="_blank">
+							GITHUB
+						</a>
+					</Information>
 					{this.props.isGameOver && (
 						<React.Fragment>
 							<WinnerBanner>
