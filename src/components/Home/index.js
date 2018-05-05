@@ -51,9 +51,11 @@ class Home extends Component {
 			this.props.setGameOver()
 			this.props.setWinner(prevProps.currentPlayer)
 		}
-		if (this.props.boxesLeft <= 0) {
-			this.props.setGameOver()
-			this.props.setWinner('Nobody')
+		if (this.props.boxesLeft === 0) {
+			if (!this.checkWin()) {
+				this.props.setGameOver()
+				this.props.setWinner('Nobody')
+			}
 		}
 	}
 
