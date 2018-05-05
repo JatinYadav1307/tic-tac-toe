@@ -34,6 +34,7 @@ class BoxContainer extends Component {
     if (!this.state.isSet) {
       this.props.fill()(this.props.name)
       this.setState({ isSet: true })
+      this.props.changePlayer()
     }
   }
 
@@ -52,6 +53,7 @@ BoxContainer.prototypes = {
   value: PropTypes.string,
   fill: PropTypes.func,
   name: PropTypes.string,
+  checkWin: PropTypes.func,
 }
 
 export default BoxContainer;
