@@ -5,7 +5,6 @@ import store from './rematchConfig'
 
 import Home from './components/Home'
 
-console.log('STORE', store.getState())
 class App extends Component {
   render() {
     return (

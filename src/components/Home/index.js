@@ -24,20 +24,12 @@ const combinations = [
 ]
 
 class Home extends Component {
-  constructor(props) {
-    super(props)
-    
-    this.state = {
-      optionNumber: 0,
-    }
-
-    this.functions = [ this.props.setCircle, this.props.setCross ]
-  }
+  functions = [ this.props.setCircle, this.props.setCross ]
 
   getFillFunction() {
-    const currentOption = this.state.optionNumber
-    this.setState({ optionNumber: currentOption ^ 1 })
-    return this.functions[currentOption]
+    const fillFunction = this.functions[this.props.optionNumber]
+    this.props.changeOption()
+    return fillFunction
   }
 
   checkWin() {
@@ -98,16 +90,19 @@ const mapStateToProps = (state) => ({
   currentPlayer: select.game.getCurrentPlayer(state),
   isGameOver: select.game.isGameOver(state),
   winner: select.game.getWinner(state),
+  optionNumber: select.game.getOptionNumber(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
   setCross: (place) => dispatch.board.setCross(place),
   setCircle: (place) => dispatch.board.setCircle(place),
+  boardReset: () => dispatch.board.resetBoard(),
+
   changePlayer: () => dispatch.game.changePlayer(),
   setGameOver: () => dispatch.game.setGameOver(),
   setWinner: (name) => dispatch.game.setWinner(name),
   gameReset: () => dispatch.game.gameReset(),
-  boardReset: () => dispatch.board.resetBoard(),
+  changeOption: () => dispatch.game.changeOption(),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
