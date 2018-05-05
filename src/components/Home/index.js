@@ -48,8 +48,9 @@ class Home extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.checkWin()) {
-      console.log('YOU WIN!', prevProps.currentPlayer)
+    if (!this.props.isGameOver && this.checkWin()) {
+      this.props.setGameOver()
+      this.props.setWinner(prevProps.currentPlayer)
     }
   }
 
@@ -72,6 +73,7 @@ class Home extends Component {
           </Flex>
         ))}
       </Flex>
+      {this.props.isGameOver && (<p>Winner is {this.props.winner}</p>)}
       </React.Fragment>
     )
   }
@@ -80,12 +82,16 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
   getValueOf: (place) => select.board.getCurrentValueAt(state, place),
   currentPlayer: select.game.getCurrentPlayer(state),
+  isGameOver: select.game.isGameOver(state),
+  winner: select.game.getWinner(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
   setCross: (place) => dispatch.board.setCross(place),
   setCircle: (place) => dispatch.board.setCircle(place),
   changePlayer: () => dispatch.game.changePlayer(),
+  setGameOver: () => dispatch.game.setGameOver(),
+  setWinner: (name) => dispatch.game.setWinner(name)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
